@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <ImageView
+        android:adjustViewBounds="true"
+        android:id="@+id/animeImage"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        tools:src="@mipmap/ic_launcher" />
+
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:layout_height="6dp"
+        android:layout_width="match_parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/animeProgressBar"
+            android:indeterminate="false"
+            android:layout_gravity="bottom"
+            android:layout_height="6dp"
+            android:layout_width="match_parent"
+            android:progressDrawable="@drawable/custom_progress_bar" />
+
+    </FrameLayout>
+</RelativeLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_height="250dp"
+        android:layout_width="wrap_content">
+
+        <ImageView
+            android:id="@+id/animeImage"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:id="@+id/anime_detail_title"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:textColor="@android:color/white"
+            tools:text="Anime Series Title" />
+
+        <TextView
+            android:background="@drawable/star_icon"
+            android:gravity="center"
+            android:id="@+id/anime_detail_score"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:paddingTop="5dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            tools:text="7" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/base_margin">
+
+        <ImageView
+            android:id="@+id/episode_decrement_button"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/base_margin"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_remove_circle_white_24dp" />
+
+        <TextView
+            android:id="@+id/episode_count_textview"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/episode_decrement_button"
+            android:layout_width="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            tools:text="17 / 256" />
+
+        <ImageView
+            android:id="@+id/episode_increment_button"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin"
+            android:layout_toRightOf="@id/episode_count_textview"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_add_circle_white_24dp" />
+
+    </RelativeLayout>
+
+    <com.example.alberto.malcompanion.ui.custom.WaifuButton
+        android:gravity="bottom"
+        android:id="@+id/waifu_button_detail"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:layout_width="match_parent" />
+
+</LinearLayout>

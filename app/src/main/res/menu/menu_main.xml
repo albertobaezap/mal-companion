@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.alberto.malcompanion.ui.activities.MainActivity">
+    <item
+        android:id="@+id/display_watching"
+        android:orderInCategory="100"
+        android:title="@string/display_watching"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/display_all"
+        android:orderInCategory="100"
+        android:title="@string/display_all"
+        app:showAsAction="never" />
+</menu>

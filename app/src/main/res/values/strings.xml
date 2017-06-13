@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MalCompanion</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_label">MyAnimeList Companion</string>
+    <string name="display_watching">Watching</string>
+    <string name="display_all">All</string>
+    <string name="anime_detail_progress">%1$d/%2$d</string>
+
+    <!-- Waifu dialog -->
+    <string name="welcome_text">Hello! My name is Eureka ♥\nよろしくお願いします!</string>
+    <string name="entries_found">Found %1$d entries!</string>
+    <string name="detail_enter">%1$s, that\'s a good one! ♥</string>
+    <string name="episode_decrement">You didn\'t watch that one did you!</string>
+    <string name="episode_increment">I hope you enjoyed it :3</string>
+    <string name="ouch">Ouchie! ( ˃̣̣̥ω˂̣̣̥ )</string>
+</resources>

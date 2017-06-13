@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="base_margin">16dp</dimen>
+    <dimen name="bottom_margin">64dp</dimen>
+</resources>
