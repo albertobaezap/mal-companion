@@ -1,5 +1,6 @@
 package com.example.alberto.malcompanion.dagger
 
+import com.example.alberto.malcompanion.ui.activities.DetailActivity
 import com.example.alberto.malcompanion.ui.activities.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -11,4 +12,5 @@ import javax.inject.Singleton
         AppModule::class))
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
+    fun inject(detailActivity: DetailActivity)
 }

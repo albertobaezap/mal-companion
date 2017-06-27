@@ -39,15 +39,16 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:visibility="invisible"
-            tools:text="7" />
+            tools:text="7"
+            tools:visibility="visible" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:padding="@dimen/base_margin">
+        android:layout_marginTop="@dimen/base_margin"
+        android:layout_width="match_parent">
 
         <ImageView
             android:id="@+id/episode_decrement_button"
@@ -76,11 +77,64 @@
 
     </RelativeLayout>
 
-    <com.example.alberto.malcompanion.ui.custom.WaifuButton
-        android:gravity="bottom"
-        android:id="@+id/waifu_button_detail"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:layout_width="match_parent" />
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <ScrollView
+            android:layout_above="@+id/status_layout"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/base_margin"
+            android:layout_width="wrap_content">
+
+            <TextView
+                android:id="@+id/synopsis_text"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/white"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Etiam ut odio sed elit interdum venenatis. Fusce in turpis ornare turpis tristique dignissim.
+            Interdum et malesuada fames ac ante ipsum primis in faucibus.
+            Maecenas eu efficitur sem, a consequat ligula. Morbi vehicula sit amet nisl ac fringilla.
+            Cras interdum nunc at ornare feugiat. Nunc nunc elit, vulputate ac elementum a, vulputate quis odio.
+            Ut porttitor volutpat massa, et venenatis massa tincidunt non. Quisque at bibendum metus." />
+        </ScrollView>
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:id="@id/status_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_margin"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/anime_detail_status"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:textColor="@android:color/white"
+                tools:text="Status: Watching" />
+
+            <TextView
+                android:id="@+id/anime_detail_mal_score"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:textColor="@android:color/white"
+                tools:text="MAL Score: 7.84" />
+
+        </LinearLayout>
+
+        <com.example.alberto.malcompanion.ui.custom.WaifuButton
+            android:gravity="bottom"
+            android:id="@+id/waifu_button_detail"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_margin"
+            android:layout_width="match_parent" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

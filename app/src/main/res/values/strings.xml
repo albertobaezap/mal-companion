@@ -5,6 +5,8 @@
     <string name="display_watching">Watching</string>
     <string name="display_all">All</string>
     <string name="anime_detail_progress">%1$d/%2$d</string>
+    <string name="anime_detail_score_text">MAL Score: %1$s</string>
+    <string name="anime_detail_status_text">Status: %1$s</string>
 
     <!-- Waifu dialog -->
     <string name="welcome_text">Hello! My name is Eureka ♥\nよろしくお願いします!</string>

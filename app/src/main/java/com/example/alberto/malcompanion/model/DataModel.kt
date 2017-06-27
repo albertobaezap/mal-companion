@@ -19,3 +19,11 @@ data class AnimeItem(
       else return 0
    }
 }
+
+data class AnimeInfo(
+   val id: Int,
+   val title: String,
+   val synopsis: String,
+   val score: Float,
+   val status: String
+)
