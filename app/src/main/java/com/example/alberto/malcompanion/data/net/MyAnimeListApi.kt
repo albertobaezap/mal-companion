@@ -21,6 +21,9 @@ interface MyAnimeListApi {
                      @Query("u") user: String)
       : Call<MyList>
 
-   @POST
-   fun updateAnimeEpisode(@Url url: String, @Body requestBody: RequestBody): Call<ResponseBody>
+   @FormUrlEncoded
+   @POST("/api/animelist/update/{id}")
+   fun updateAnimeEpisode(@Path("id") id: Int,
+                          @Field("data") data: String)
+      : Call<ResponseBody>
 }

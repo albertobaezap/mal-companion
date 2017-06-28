@@ -65,21 +65,41 @@ class DetailActivity : BaseActivity() {
 //      anime_detail_title.textColor = vibrant!!.titleTextColor
 
       episode_decrement_button.setOnClickListener {
-         animeItem!!.watchedEpisodes--
-         waifu_button_detail.displayText(resources.getString(R.string.episode_decrement))
-         episode_count_textview.text = String.format(resources.getString(anime_detail_progress),
-            animeItem!!.watchedEpisodes, animeItem!!.totalEpisodes)
+
+         with(animeItem!!) {
+
+            watchedEpisodes--
+
+            waifu_button_detail.displayText(resources.getString(R.string.episode_decrement))
+            episode_count_textview.text = String.format(resources.getString(anime_detail_progress),
+               watchedEpisodes, totalEpisodes)
+
+            doAsync {
+               animeListManager.updateAnime(this@with).subscribe()
+
+            }
+         }
+
       }
 
       episode_increment_button.setOnClickListener {
-         animeItem!!.watchedEpisodes++
-         waifu_button_detail.displayText(resources.getString(R.string.episode_increment))
-         episode_count_textview.text = String.format(resources.getString(anime_detail_progress),
-            animeItem!!.watchedEpisodes, animeItem!!.totalEpisodes)
+
+         with(animeItem!!) {
+
+            watchedEpisodes++
+
+            waifu_button_detail.displayText(resources.getString(R.string.episode_increment))
+            episode_count_textview.text = String.format(resources.getString(anime_detail_progress),
+               watchedEpisodes, totalEpisodes)
+
+            doAsync {
+               animeListManager.updateAnime(this@with).subscribe()
+
+            }
+         }
       }
 
       requestAnimeInfo()
-
    }
 
    /**

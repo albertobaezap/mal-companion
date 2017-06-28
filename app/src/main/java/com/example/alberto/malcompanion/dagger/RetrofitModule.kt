@@ -7,9 +7,11 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import javax.inject.Singleton
+
 
 @Module
 class RetrofitModule {
@@ -24,13 +26,22 @@ class RetrofitModule {
    @Provides
    @Singleton
       //TODO Properties defined in local.properties only for debug mode, remove when login screen is implemented
-   fun provideInterceptor(): Interceptor = AuthenticationInterceptor(BuildConfig.USERNAME, BuildConfig.PASSWORD)
+   fun provideAuthenticationInterceptor(): Interceptor = AuthenticationInterceptor(BuildConfig.USERNAME, BuildConfig.PASSWORD)
 
    @Provides
    @Singleton
-   fun provideClient(interceptor: Interceptor): OkHttpClient {
+   fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+      val loggingInterceptor = HttpLoggingInterceptor()
+      loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+      return loggingInterceptor
+   }
+
+   @Provides
+   @Singleton
+   fun provideClient(authenticationInterceptor: Interceptor, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
       return OkHttpClient.Builder()
-         .addInterceptor(interceptor)
+         .addInterceptor(authenticationInterceptor)
+         .addInterceptor(loggingInterceptor)
          .build()
    }
 

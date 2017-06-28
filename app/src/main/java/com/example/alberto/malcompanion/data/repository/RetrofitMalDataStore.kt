@@ -2,12 +2,12 @@ package com.example.alberto.malcompanion.data.repository
 
 import com.example.alberto.malcompanion.data.bean.Anime
 import com.example.alberto.malcompanion.data.bean.MyList
+import com.example.alberto.malcompanion.data.bean.mapper.XmlStringSerializer
 import com.example.alberto.malcompanion.data.net.MyAnimeListApi
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeListCallback
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeSearchCallback
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeUpdateCallback
-import okhttp3.MediaType
-import okhttp3.RequestBody
+import com.example.alberto.malcompanion.model.AnimeItem
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -71,12 +71,17 @@ class RetrofitMalDataStore @Inject constructor(val myAnimeListApi: MyAnimeListAp
    /**
     * Update the info for an anime
     */
-   override fun updateAnime(id: Int, callback: AnimeUpdateCallback) {
+   override fun updateAnime(animeItem: AnimeItem, callback: AnimeUpdateCallback) {
 
-      val url = "https://myanimelist.net/api/animelist/update/$id.xml"
-      val strRequest = ""
-      val requestBody = RequestBody.create(MediaType.parse("text/plain"), strRequest)
-      val updateAnimeRequest = myAnimeListApi.updateAnimeEpisode(url, requestBody)
+      Timber.d("Requesting list update for anime ${animeItem.id}")
+
+      val xmlStringSerializer = XmlStringSerializer()
+
+      val data = xmlStringSerializer.updateAnime(animeItem.watchedEpisodes)
+
+      Timber.v("Update string: $data")
+
+      val updateAnimeRequest = myAnimeListApi.updateAnimeEpisode(animeItem.id, data)
 
       updateAnimeRequest.enqueue(object : Callback<ResponseBody> {
          override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
