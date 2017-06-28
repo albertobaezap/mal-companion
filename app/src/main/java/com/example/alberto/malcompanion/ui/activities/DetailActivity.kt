@@ -19,6 +19,9 @@ import org.jetbrains.anko.uiThread
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Detailed view for a selected anime item
+ */
 class DetailActivity : BaseActivity() {
 
    @Inject
@@ -40,7 +43,9 @@ class DetailActivity : BaseActivity() {
       getWindow().getDecorView().systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
       getWindow().statusBarColor = Color.TRANSPARENT;
 
+      //Get the serialized object as anime item
       animeItem = intent.getSerializableExtra(EXTRA_ITEM) as AnimeItem
+      //Get the transition to display the anime image
       val transitionName = intent.getStringExtra(EXTRA_TRANSITION_NAME)
       animeImage.transitionName = transitionName
       Picasso.with(this).load(animeItem!!.image).into(animeImage, object : Callback {
@@ -77,6 +82,9 @@ class DetailActivity : BaseActivity() {
 
    }
 
+   /**
+    * Request anime info for synopsis and another elements when the view is loaded
+    */
    fun requestAnimeInfo() {
       Timber.d("Requesting anime info for ${animeItem!!.title}")
       doAsync {
@@ -96,16 +104,19 @@ class DetailActivity : BaseActivity() {
 
    }
 
+   /**
+    * Load dynamic elements when the animation is completed
+    */
    override fun onEnterAnimationComplete() {
       super.onEnterAnimationComplete()
 
       anime_detail_title.text = animeItem!!.title
       episode_count_textview.text = String.format(resources.getString(anime_detail_progress),
          animeItem!!.watchedEpisodes, animeItem!!.totalEpisodes)
-      if (animeItem!!.score != null) {
-         anime_detail_score.visibility = View.VISIBLE
-         anime_detail_score.text = animeItem!!.score.toString()
-      }
+
+      anime_detail_score.visibility = View.VISIBLE
+      anime_detail_score.text = animeItem!!.score.toString()
+
       waifu_button_detail.displayText(resources.getString(R.string.detail_enter, animeItem!!.title))
 
    }

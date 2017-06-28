@@ -9,6 +9,10 @@ import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Interactor for the request handling to retrieve responses with Single readable elements
+ * TODO: We can change this conversion to do it directly with Retrofit
+ */
 class AnimeListManager @Inject constructor(val retrofitMalDataStore: RetrofitMalDataStore) : ListManager {
 
    override fun requestMyAnimeList(user: String): Single<List<AnimeListEntry>> {

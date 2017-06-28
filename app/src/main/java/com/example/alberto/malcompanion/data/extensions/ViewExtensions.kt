@@ -23,6 +23,9 @@ fun ImageView.setTopCrop() {
         setImageMatrix(matrix);
 }
 
+/**
+ * Set a text color programmatically to a textview
+ */
 var TextView.textColor: Int
         get() = currentTextColor
         set(v) = setTextColor(v)

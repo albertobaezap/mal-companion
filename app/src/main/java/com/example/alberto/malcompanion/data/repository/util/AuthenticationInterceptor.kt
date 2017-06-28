@@ -4,6 +4,9 @@ import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
 
+/**
+ * Interceptor to add user credentials on all the requests
+ */
 class AuthenticationInterceptor(val user: String, val password: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

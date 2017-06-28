@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import com.example.alberto.malcompanion.MalApplication
 import com.example.alberto.malcompanion.dagger.AppComponent
 
+/**
+ * Base activity with basic dependency injection to be extended by all other activities.
+ */
 abstract class BaseActivity : android.support.v7.app.AppCompatActivity() {
 
     abstract fun injectDependencies(appComponent : com.example.alberto.malcompanion.dagger.AppComponent)

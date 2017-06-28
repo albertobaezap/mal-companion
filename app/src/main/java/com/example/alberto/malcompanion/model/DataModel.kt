@@ -20,6 +20,9 @@ data class AnimeItem(
    }
 }
 
+/**
+ * Extra data about the series to display on the detailed view
+ */
 data class AnimeInfo(
    val id: Int,
    val title: String,

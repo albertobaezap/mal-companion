@@ -10,14 +10,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.example.alberto.malcompanion.R
-import com.example.alberto.malcompanion.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.button_waifu.view.*
 
+/**
+ * Custom view to handle the waifu button to display information about the series
+ */
 class WaifuButton @JvmOverloads constructor(
    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
    val animatorSet: AnimatorSet = AnimatorSet()
+
+   companion object {
+      val ANIMATION_ALPHA_MIN: Float = 0f
+      val ANIMATION_ALPHA_MAX: Float = 1f
+      val ANIMATION_DURATION: Long = 300 //ms
+      val ANIMATION_DELAY: Long = 2000 //ms
+   }
 
    init {
 
@@ -57,18 +66,18 @@ class WaifuButton @JvmOverloads constructor(
    fun createSpeechBubbleAnimation() {
       val showDialogScaleXAnim = ObjectAnimator.ofFloat(bubble_text, View.SCALE_X, 0f, 1f)
       val showDialogScaleYAnim = ObjectAnimator.ofFloat(bubble_text, View.SCALE_Y, 0f, 1f)
-      val showDialogAlphaAnim = ObjectAnimator.ofFloat(bubble_text, View.ALPHA, MainActivity.ANIMATION_ALPHA_MIN, MainActivity.ANIMATION_ALPHA_MAX)
+      val showDialogAlphaAnim = ObjectAnimator.ofFloat(bubble_text, View.ALPHA, ANIMATION_ALPHA_MIN, ANIMATION_ALPHA_MAX)
       val hideDialogScaleXAnim = ObjectAnimator.ofFloat(bubble_text, View.SCALE_X, 1f, 0f)
       val hideDialogScaleYAnim = ObjectAnimator.ofFloat(bubble_text, View.SCALE_Y, 1f, 0f)
-      val hideDialogAlphaAnim = ObjectAnimator.ofFloat(bubble_text, View.ALPHA, MainActivity.ANIMATION_ALPHA_MAX, MainActivity.ANIMATION_ALPHA_MIN)
+      val hideDialogAlphaAnim = ObjectAnimator.ofFloat(bubble_text, View.ALPHA, ANIMATION_ALPHA_MAX, ANIMATION_ALPHA_MIN)
 
-      hideDialogScaleXAnim.startDelay = MainActivity.ANIMATION_DELAY + MainActivity.ANIMATION_DURATION
-      hideDialogScaleYAnim.startDelay = MainActivity.ANIMATION_DELAY + MainActivity.ANIMATION_DURATION
-      hideDialogAlphaAnim.startDelay = MainActivity.ANIMATION_DELAY + MainActivity.ANIMATION_DURATION
+      hideDialogScaleXAnim.startDelay = ANIMATION_DELAY + ANIMATION_DURATION
+      hideDialogScaleYAnim.startDelay = ANIMATION_DELAY + ANIMATION_DURATION
+      hideDialogAlphaAnim.startDelay = ANIMATION_DELAY + ANIMATION_DURATION
 
       animatorSet.playTogether(showDialogScaleXAnim, showDialogScaleYAnim, hideDialogScaleXAnim, hideDialogScaleYAnim,
          showDialogAlphaAnim, hideDialogAlphaAnim)
-      animatorSet.duration = MainActivity.ANIMATION_DURATION
+      animatorSet.duration = ANIMATION_DURATION
 //      animatorSet.interpolator = OvershootInterpolator()
 
    }
