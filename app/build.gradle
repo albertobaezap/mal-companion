@@ -38,29 +38,42 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile "org.jetbrains.anko:anko-common:$anko_version"
     compile "org.jetbrains.anko:anko-sqlite:$anko_version"
+
+    //Support
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.3.1'
+
+    //Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile('com.squareup.retrofit2:converter-simplexml:2.3.0') {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
     }
-
-
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
-    compile 'io.reactivex:rxkotlin:2.0.0-RC1'
-    compile 'com.android.support:palette-v7:25.3.1'
+    //Rx
+    compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'
+
+    //Dagger
     compile 'com.google.dagger:dagger:2.10'
-    testCompile 'junit:junit:4.12'
     kapt 'com.google.dagger:dagger-compiler:2.10'
     compile 'com.jakewharton.timber:timber:4.5.1'
+
+    //Other
+    compile 'com.android.support:palette-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
 
 }
 

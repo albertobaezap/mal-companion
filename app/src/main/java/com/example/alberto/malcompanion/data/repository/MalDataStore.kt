@@ -1,15 +1,17 @@
 package com.example.alberto.malcompanion.data.repository
 
-import com.example.alberto.malcompanion.data.repository.callbacks.AnimeListCallback
-import com.example.alberto.malcompanion.data.repository.callbacks.AnimeSearchCallback
+import com.example.alberto.malcompanion.data.bean.Anime
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeUpdateCallback
+import com.example.alberto.malcompanion.model.AnimeInfo
 import com.example.alberto.malcompanion.model.AnimeItem
+import io.reactivex.Single
+import okhttp3.ResponseBody
 
 interface MalDataStore {
 
-    fun searchAnime(searchElement: String, callback: AnimeSearchCallback)
+   fun searchAnime(searchElement: String): Single<List<AnimeInfo>>
 
-    fun requestMyAnimeList(status: String, user: String, callback: AnimeListCallback)
+   fun requestMyAnimeList(status: String, user: String): Single<List<AnimeItem>>
 
-    fun updateAnime(animeItem: AnimeItem, callback: AnimeUpdateCallback)
+   fun updateAnime(animeItem: AnimeItem): Single<ResponseBody>
 }

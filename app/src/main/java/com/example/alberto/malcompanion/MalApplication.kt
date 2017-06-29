@@ -22,7 +22,7 @@ class MalApplication : Application() {
 
    private fun createComponent() {
       appComponent = DaggerAppComponent.builder()
-         .appModule(AppModule(this))
+         .appModule(AppModule())
          .build()
    }
 

@@ -5,14 +5,19 @@ import java.io.Serializable
 /**
  * Custom data class to show items in the RecyclerView
  */
-data class AnimeItem(
+class AnimeItem(
    val id: Int,
    val title: String,
    val image: String,
    val status: Int,
    val score: Int?,
-   var watchedEpisodes: Int,
+   val _watchedEpisodes: Int,
    val totalEpisodes: Int) : Serializable {
+
+   var watchedEpisodes: Int = _watchedEpisodes
+      set(value) {
+         if (value in 0..totalEpisodes) field = value
+   }
 
    fun getProgress(): Int {
       if (totalEpisodes > 0) return watchedEpisodes * 100 / totalEpisodes

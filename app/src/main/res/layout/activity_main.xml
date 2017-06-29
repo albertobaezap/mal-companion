@@ -23,8 +23,8 @@
 
     <include layout="@layout/content_main" />
 
-    <com.example.alberto.malcompanion.ui.custom.WaifuButton
-        android:id="@+id/waifu_button_main"
+    <com.example.alberto.malcompanion.ui.custom.CompanionView
+        android:id="@+id/companion_view_main"
         android:gravity="bottom"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"

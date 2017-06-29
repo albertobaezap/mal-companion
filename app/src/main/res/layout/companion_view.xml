@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    tools:context="com.example.alberto.malcompanion.ui.activities.WaifuActivity">
+    android:layout_width="match_parent">
 
     <ImageView
-        android:id="@+id/waifu_button"
+        android:id="@+id/companion_image_view"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -20,7 +18,7 @@
         android:id="@+id/bubble_text"
         android:layout_alignParentBottom="true"
         android:layout_height="70dp"
-        android:layout_toLeftOf="@id/waifu_button"
+        android:layout_toLeftOf="@id/companion_image_view"
         android:layout_width="wrap_content"
         android:paddingEnd="26dp"
         android:paddingStart="8dp"

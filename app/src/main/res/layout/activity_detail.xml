@@ -127,9 +127,9 @@
 
         </LinearLayout>
 
-        <com.example.alberto.malcompanion.ui.custom.WaifuButton
+        <com.example.alberto.malcompanion.ui.custom.CompanionView
             android:gravity="bottom"
-            android:id="@+id/waifu_button_detail"
+            android:id="@+id/companion_view_detail"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_margin"
             android:layout_width="match_parent" />

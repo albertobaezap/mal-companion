@@ -2,12 +2,19 @@ package com.example.alberto.malcompanion.data.repository
 
 import com.example.alberto.malcompanion.data.bean.Anime
 import com.example.alberto.malcompanion.data.bean.MyList
+import com.example.alberto.malcompanion.data.bean.mapper.AnimeMapper
+import com.example.alberto.malcompanion.data.bean.mapper.InfoMapper
 import com.example.alberto.malcompanion.data.bean.mapper.XmlStringSerializer
 import com.example.alberto.malcompanion.data.net.MyAnimeListApi
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeListCallback
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeSearchCallback
 import com.example.alberto.malcompanion.data.repository.callbacks.AnimeUpdateCallback
+import com.example.alberto.malcompanion.model.AnimeInfo
 import com.example.alberto.malcompanion.model.AnimeItem
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,83 +27,37 @@ import javax.inject.Inject
  */
 class RetrofitMalDataStore @Inject constructor(val myAnimeListApi: MyAnimeListApi) : MalDataStore {
 
-   /**
-    * Perform a search with a string parameter
-    */
-   override fun searchAnime(searchElement: String, callback: AnimeSearchCallback) {
-      Timber.d("Searching for element " + searchElement)
+   var animeMapper: AnimeMapper = AnimeMapper()
+   var infoMapper: InfoMapper = InfoMapper()
 
-      val searchAnimeRequest = myAnimeListApi.searchAnime(searchElement)
-      searchAnimeRequest.enqueue(object : Callback<Anime> {
-         override fun onResponse(call: Call<Anime>?, response: Response<Anime>?) {
-
-            if (response != null && response.isSuccessful) {
-               callback.onAnimeSearchSuccess(response.body() as Anime)
-            }
+   override fun requestMyAnimeList(status: String, user: String): Single<List<AnimeItem>> {
+      return myAnimeListApi.requestMyList(status, user)
+         .subscribeOn(Schedulers.computation())
+         .map { s ->
+            //Transform from server data to model data
+            animeMapper.transform(s.animeList)
+               .sortedBy { it.title }
          }
-
-         override fun onFailure(call: Call<Anime>?, t: Throwable?) {
-            if (t != null) {
-               callback.onFailure(t)
-            }
-         }
-
-      })
    }
 
    /**
-    * Request the user MyAnimeList
+    * Perform a search with a string parameter
     */
-   override fun requestMyAnimeList(status: String, user: String, callback: AnimeListCallback) {
-      Timber.d("Requesting MyAnimeList for user $user with status $status")
-
-      val animeListRequest = myAnimeListApi.requestMyList(status, user)
-      animeListRequest.enqueue(object : Callback<MyList> {
-
-         override fun onResponse(call: Call<MyList>?, response: Response<MyList>?) {
-            if (response != null && response.isSuccessful) {
-               callback.onAnimeListSuccess(response.body() as MyList)
-            }
-         }
-
-         override fun onFailure(call: Call<MyList>?, t: Throwable?) {
-            if (t != null) {
-               callback.onFailure(t)
-            }
-         }
-
-      })
+   override fun searchAnime(searchElement: String): Single<List<AnimeInfo>> {
+      Timber.d("Searching for element " + searchElement)
+      return myAnimeListApi.searchAnime(searchElement)
+         .subscribeOn(Schedulers.computation())
+         .map { (entryList) -> infoMapper.transform(entryList) }
    }
 
    /**
     * Update the info for an anime
     */
-   override fun updateAnime(animeItem: AnimeItem, callback: AnimeUpdateCallback) {
-
+   override fun updateAnime(animeItem: AnimeItem): Single<ResponseBody> {
       Timber.d("Requesting list update for anime ${animeItem.id}")
-
       val xmlStringSerializer = XmlStringSerializer()
-
       val data = xmlStringSerializer.updateAnime(animeItem.watchedEpisodes)
-
-      Timber.v("Update string: $data")
-
-      val updateAnimeRequest = myAnimeListApi.updateAnimeEpisode(animeItem.id, data)
-
-      updateAnimeRequest.enqueue(object : Callback<ResponseBody> {
-         override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-            if (response != null && response.isSuccessful) {
-               callback.onAnimeUpdateSuccess(response.body())
-            }
-         }
-
-         override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-            if (t != null) {
-               callback.onFailure(t)
-            }
-         }
-
-      })
+      return myAnimeListApi.updateAnimeEpisode(animeItem.id, data)
+         .subscribeOn(Schedulers.computation())
    }
-
 }

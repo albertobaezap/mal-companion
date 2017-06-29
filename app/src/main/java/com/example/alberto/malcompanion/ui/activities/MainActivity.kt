@@ -12,28 +12,24 @@ import android.widget.ImageView
 import com.example.alberto.malcompanion.BuildConfig
 import com.example.alberto.malcompanion.R
 import com.example.alberto.malcompanion.dagger.AppComponent
-import com.example.alberto.malcompanion.data.bean.mapper.AnimeMapper
-import com.example.alberto.malcompanion.data.repository.AnimeListManager
 import com.example.alberto.malcompanion.model.AnimeItem
+import com.example.alberto.malcompanion.mvp.MainPresenter
+import com.example.alberto.malcompanion.mvp.MainView
 import com.example.alberto.malcompanion.ui.activities.DetailActivity.Companion.EXTRA_ITEM
 import com.example.alberto.malcompanion.ui.activities.DetailActivity.Companion.EXTRA_TRANSITION_NAME
 import com.example.alberto.malcompanion.ui.adapters.AnimeListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * Main activity for the project
  */
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), MainView {
 
    @Inject
-   protected lateinit var animeListManager: AnimeListManager
-
-   var animeMapper: AnimeMapper = AnimeMapper()
+   protected lateinit var mainPresenter: MainPresenter
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
@@ -43,11 +39,18 @@ class MainActivity : BaseActivity() {
       currentAnimeList.layoutManager = GridLayoutManager(this, 3)
 
       //Display welcome text
-      waifu_button_main.displayText(resources.getString(R.string.welcome_text))
+      companion_view_main.displayText(resources.getString(R.string.welcome_text))
 
       //Load list at start
-      displayList(1)
+      mainPresenter.onCreate(this)
 
+   }
+
+   override fun onResume() {
+      super.onResume()
+
+      //Reload list when resuming activity
+      mainPresenter.onResume()
    }
 
    /**
@@ -55,44 +58,28 @@ class MainActivity : BaseActivity() {
     *
     * @param status Status to filter the list. If null, display the whole list
     */
-   fun displayList(status: Int? = null) {
-      doAsync {
-         animeListManager.requestMyAnimeList(BuildConfig.USERNAME)
-            .subscribe({ animeList ->
-               uiThread {
-                  //Retrieve the list with all the anime items and pass it to the adapter
-                  val adapter = AnimeListAdapter(
-                     //Transform from server data to model data
-                     animeMapper.transform(animeList)
-                        .filter { item -> (if (status != null) item.status else status) == status } //Filter by status
-                        .sortedBy { it.title },
-                     { animeItem: AnimeItem, imageView: ImageView ->
-                        waifu_button_main.cancelAnimation() //Cancel animation before going into detail view
+   override fun displayList(animeList: List<AnimeItem>) {
+      currentAnimeList.adapter = AnimeListAdapter(animeList, {
+         animeItem: AnimeItem, imageView: ImageView ->
+         companion_view_main.cancelAnimation() //Cancel animation before going into detail view
 
-                        //Show the detail view on item click
-                        showDetailActivity(animeItem, imageView)
-                     })
-                  currentAnimeList.adapter = adapter
-
-                  waifu_button_main.displayText(resources.getString(R.string.entries_found, animeList.size))
-               }
-            }, {
-               Timber.e("Error!")
-            })
-      }
+         //Show the detail view on item click
+         showDetailView(animeItem, imageView)
+      })
+      companion_view_main.displayText(resources.getString(R.string.entries_found, animeList.size))
    }
 
    /**
     * Show the detail activity for the selected anime item with a shared element transition
     */
-   fun showDetailActivity(animeItem: AnimeItem, animeImage: ImageView) {
+   fun showDetailView(animeItem: AnimeItem, animeView: ImageView) {
       val intent = Intent(MainActivity@ this, DetailActivity::class.java)
       intent.putExtra(EXTRA_ITEM, animeItem)
-      intent.putExtra(EXTRA_TRANSITION_NAME, ViewCompat.getTransitionName(animeImage))
+      intent.putExtra(EXTRA_TRANSITION_NAME, ViewCompat.getTransitionName(animeView))
 
-     Timber.d("Transition name: ${ViewCompat.getTransitionName(animeImage)}")
+      Timber.d("Transition name: ${ViewCompat.getTransitionName(animeView)}")
 
-      val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, animeImage, ViewCompat.getTransitionName(animeImage))
+      val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, animeView, ViewCompat.getTransitionName(animeView))
       startActivity(intent, options.toBundle())
    }
 
@@ -110,10 +97,10 @@ class MainActivity : BaseActivity() {
 
       when (id) {
          R.id.display_watching -> {
-            displayList(1)
+            mainPresenter.requestMyAnimeList(BuildConfig.USERNAME, 1)
          }
          R.id.display_all -> {
-            displayList()
+            mainPresenter.requestMyAnimeList(user = BuildConfig.USERNAME)
          }
          R.id.home -> {
             supportFinishAfterTransition()

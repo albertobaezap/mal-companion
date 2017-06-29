@@ -16,7 +16,7 @@ class AnimeMapper {
          image = series_image,
          score = my_score,
          status = my_status!!,
-         watchedEpisodes = my_watched_episodes,
+         _watchedEpisodes = my_watched_episodes,
          totalEpisodes = series_episodes)
    }
 }

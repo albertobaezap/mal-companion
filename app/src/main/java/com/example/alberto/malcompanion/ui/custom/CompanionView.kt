@@ -10,12 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.example.alberto.malcompanion.R
-import kotlinx.android.synthetic.main.button_waifu.view.*
+import kotlinx.android.synthetic.main.companion_view.view.*
 
 /**
- * Custom view to handle the waifu button to display information about the series
+ * Custom view to handle the companion view to display information about the series
  */
-class WaifuButton @JvmOverloads constructor(
+class CompanionView @JvmOverloads constructor(
    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
@@ -31,10 +31,10 @@ class WaifuButton @JvmOverloads constructor(
    init {
 
       val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-      inflater.inflate(R.layout.button_waifu, this, true)
+      inflater.inflate(R.layout.companion_view, this, true)
 
       createSpeechBubbleAnimation()
-      waifu_button.setOnClickListener {
+      companion_image_view.setOnClickListener {
          displayText(resources.getString(R.string.ouch))
       }
    }

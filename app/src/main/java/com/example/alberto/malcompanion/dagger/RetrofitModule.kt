@@ -9,6 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import javax.inject.Singleton
 
@@ -50,6 +51,7 @@ class RetrofitModule {
    fun provideRetrofit(baseUrl: String, client: OkHttpClient): Retrofit {
       return Retrofit.Builder()
          .baseUrl(baseUrl)
+         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
          .addConverterFactory(SimpleXmlConverterFactory.create())
          .client(client)
          .build()

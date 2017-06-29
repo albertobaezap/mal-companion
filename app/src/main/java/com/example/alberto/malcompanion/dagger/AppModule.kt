@@ -1,30 +1,27 @@
 package com.example.alberto.malcompanion.dagger
 
-import com.example.alberto.malcompanion.MalApplication
-import com.example.alberto.malcompanion.data.bean.mapper.AnimeMapper
-import com.example.alberto.malcompanion.data.net.MyAnimeListApi
-import com.example.alberto.malcompanion.data.repository.AnimeListManager
-import com.example.alberto.malcompanion.data.repository.ListManager
 import com.example.alberto.malcompanion.data.repository.MalDataStore
 import com.example.alberto.malcompanion.data.repository.RetrofitMalDataStore
-import com.example.alberto.malcompanion.data.repository.util.AuthenticationInterceptor
+import com.example.alberto.malcompanion.mvp.DetailPresenter
+import com.example.alberto.malcompanion.mvp.DetailPresenterImpl
+import com.example.alberto.malcompanion.mvp.MainPresenter
+import com.example.alberto.malcompanion.mvp.MainPresenterImpl
 import dagger.Module
 import dagger.Provides
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule(val app: MalApplication) {
+class AppModule {
 
-    @Provides
-    @Singleton
-    fun provideMalDataStore(retrofitMalDataStore: RetrofitMalDataStore) : MalDataStore = retrofitMalDataStore
+   @Provides
+   @Singleton
+   fun provideMalDataStore(retrofitMalDataStore: RetrofitMalDataStore): MalDataStore = retrofitMalDataStore
 
-    @Provides
-    @Singleton
-    fun provideListManager(animeListManager: AnimeListManager) : ListManager = animeListManager
+   @Provides
+   @Singleton
+   fun provideMainPresenter(mainPresenter: MainPresenterImpl): MainPresenter = mainPresenter
 
+   @Provides
+   @Singleton
+   fun provideDetailPresenter(detailPresenter: DetailPresenterImpl): DetailPresenter = detailPresenter
 }

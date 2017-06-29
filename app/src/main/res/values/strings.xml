@@ -8,7 +8,7 @@
     <string name="anime_detail_score_text">MAL Score: %1$s</string>
     <string name="anime_detail_status_text">Status: %1$s</string>
 
-    <!-- Waifu dialog -->
+    <!-- Companion dialog -->
     <string name="welcome_text">Hello! My name is Eureka ♥\nよろしくお願いします!</string>
     <string name="entries_found">Found %1$d entries!</string>
     <string name="detail_enter">%1$s, that\'s a good one! ♥</string>

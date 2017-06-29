@@ -9,6 +9,5 @@ import okhttp3.ResponseBody
 interface ListManager {
 
     fun searchAnime(searchTerm: String) : Single<Anime>
-    fun requestMyAnimeList(user: String) : Single<List<AnimeListEntry>>
     fun updateAnime(animeItem: AnimeItem) : Single<ResponseBody>
 }

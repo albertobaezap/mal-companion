@@ -25,7 +25,6 @@
         <activity
             android:name=".ui.activities.DetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.WaifuActivity"></activity>
     </application>
 
 </manifest>
