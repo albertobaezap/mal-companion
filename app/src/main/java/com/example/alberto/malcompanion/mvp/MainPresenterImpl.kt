@@ -2,8 +2,7 @@ package com.example.alberto.malcompanion.mvp
 
 import com.example.alberto.malcompanion.BuildConfig
 import com.example.alberto.malcompanion.data.repository.RetrofitMalDataStore
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 /**
@@ -26,15 +25,10 @@ class MainPresenterImpl @Inject constructor(val retrofitMalDataStore: RetrofitMa
    override fun requestMyAnimeList(user: String, status: Int?) {
       retrofitMalDataStore.requestMyAnimeList("all", user) //TODO Change the status
          .map { animeList -> animeList.filter { item -> (if (status != null) item.status else status) == status } } //Filter by status
+         .observeOn(AndroidSchedulers.mainThread())
          .subscribe { animeList ->
-            doAsync {
-               uiThread {
-                  mainView.displayList(animeList)
-               }
-            }
+            mainView.displayList(animeList)
          }
+
    }
-
-
-
 }

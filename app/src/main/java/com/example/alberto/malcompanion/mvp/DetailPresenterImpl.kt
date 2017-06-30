@@ -45,21 +45,16 @@ class DetailPresenterImpl @Inject constructor(val retrofitMalDataStore: Retrofit
       detailView.showAnimeUserDetail(animeItem)
    }
 
-
    override fun requestEpisodeCountUpdate(updateType: UpdateType) {
       when (updateType) {
          UpdateType.INCREMENT -> animeItem.watchedEpisodes++
          UpdateType.DECREMENT -> animeItem.watchedEpisodes--
       }
 
-      doAsync {
-         retrofitMalDataStore.updateAnime(animeItem)
-            .map { response -> Timber.d("Response was: $response") }
+      retrofitMalDataStore.updateAnime(animeItem)
+         .map { response -> Timber.d("Response was: $response") }
 //            .filter { response -> } //TODO Filter successful response
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { response ->
-               uiThread { detailView.updateEpisodeCount(animeItem.watchedEpisodes) }
-            }
-      }
+         .observeOn(AndroidSchedulers.mainThread())
+         .subscribe { response -> detailView.updateEpisodeCount(animeItem.watchedEpisodes) }
    }
 }
